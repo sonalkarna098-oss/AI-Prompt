@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h3>Edit Entry #{{ entry.id }}</h3>
+        <form method="POST">
+            <div class="mb-3">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" value="{{ entry.title }}" required>
+            </div>
+            <div class="mb-3">
+                <label>Content</label>
+                <textarea name="content" class="form-control" rows="4" required>{{ entry.content }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

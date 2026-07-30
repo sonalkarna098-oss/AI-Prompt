@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>User AI Assistant</h2>
+
+<div class="card my-4 p-3 shadow-sm">
+    <h4>Ask AI a Question</h4>
+    <form method="POST">
+        <div class="mb-3">
+            <textarea name="prompt" class="form-control" placeholder="Enter your prompt here (e.g., Explain photosythesis in simple terms)..." rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate AI Response</button>
+    </form>
+</div>
+
+<h4>Your History</h4>
+<div class="accordion" id="historyAccordion">
+    {% for entry in entries %}
+        <div class="accordion-item mb-2">
+            <h2 class="accordion-header" id="heading{{ entry.id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ entry.id }}">
+                    <strong>Prompt:</strong>&nbsp;{{ entry.title }}
+                </button>
+            </h2>
+            <div id="collapse{{ entry.id }}" class="accordion-collapse collapse" data-bs-parent="#historyAccordion">
+                <div class="accordion-body bg-light">
+                    <h6><strong>AI Response:</strong></h6>
+                    <p style="white-space: pre-wrap;">{{ entry.content }}</p>
+                    <small class="text-muted">Asked on: {{ entry.created_at }}</small>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">No prompts submitted yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

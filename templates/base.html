@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portal</title>
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Google Font (Outfit) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --beeswax-base: #f5e6ca;       /* Main light beeswax background */
+            --beeswax-light: #faf3e0;      /* High-light cream */
+            --beeswax-saturate: #e6c594;   /* Saturated beeswax accent */
+            --beeswax-dark: #b8860b;       /* Warm dark honey accent */
+            --text-main: #3a2e2b;          /* Soft warm brown dark text */
+            --text-muted: #736257;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--beeswax-base) 0%, #f7ecd5 50%, var(--beeswax-light) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        /* Warm Navbar */
+        .navbar-custom {
+            background: rgba(250, 243, 224, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--beeswax-saturate);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.08);
+        }
+
+        .navbar-brand {
+            color: var(--text-main) !important;
+        }
+
+        /* Beeswax Glassmorphism Card */
+        .auth-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--beeswax-saturate);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(184, 134, 11, 0.12);
+            padding: 2.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .auth-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.18);
+            border-color: var(--beeswax-dark);
+        }
+
+        /* Custom Input Fields with Warm Borders */
+        .form-control, .form-select {
+            background-color: var(--beeswax-light);
+            border: 1px solid var(--beeswax-saturate);
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: var(--beeswax-dark);
+            box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.15);
+            color: var(--text-main);
+        }
+
+        .input-group-text {
+            background-color: var(--beeswax-saturate);
+            border: 1px solid var(--beeswax-saturate);
+            color: var(--text-main);
+            border-radius: 12px 0 0 12px;
+        }
+
+        /* Buttons with Honey/Beeswax Saturation */
+        .btn-beeswax {
+            background: linear-gradient(135deg, #d4a359 0%, var(--beeswax-dark) 100%);
+            border: none;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 12px;
+            padding: 0.75rem;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-beeswax:hover {
+            background: linear-gradient(135deg, var(--beeswax-dark) 0%, #9c6f06 100%);
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.35);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .btn-outline-beeswax {
+            border: 2px solid var(--beeswax-dark);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .btn-outline-beeswax:hover {
+            background-color: var(--beeswax-dark);
+            color: #ffffff;
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#">
+        <i class="bi bi-hexagon-fill fs-4" style="color: var(--beeswax-dark);"></i> AI Portal
+    </a>
+    <div>
+      {% if session.get('user_id') %}
+        <span class="navbar-text me-3" style="color: var(--text-main);">
+            <i class="bi bi-person-circle me-1"></i> <strong>{{ session['username'] }}</strong> 
+            <span class="badge text-capitalize ms-1" style="background-color: var(--beeswax-dark);">{{ session['role'] }}</span>
+        </span>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+        </a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-outline-beeswax btn-sm rounded-pill px-3 me-2">Sign In</a>
+        <a href="{{ url_for('signup') }}" class="btn btn-beeswax btn-sm rounded-pill px-3">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<div class="container my-5">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show animate__animated animate__fadeInDown" role="alert">
+          <i class="bi bi-info-circle-fill me-2"></i> {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
